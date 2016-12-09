@@ -6,7 +6,7 @@
 /*   By: vtenigin <vtenigin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/06 22:42:58 by vtenigin          #+#    #+#             */
-/*   Updated: 2016/12/06 23:01:32 by vtenigin         ###   ########.fr       */
+/*   Updated: 2016/12/08 19:37:52 by vtenigin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,18 @@
 
 # include "libft/libft.h"
 # include <stdarg.h>
-# include <stdlib.h>
-# include <unistd.h>
 
-# include <stdio.h> // ?
-
-typedef struct		s_arg
+typedef struct		s_env
 {
-	va_list		ap;
+	va_list		arg;
 	int			ret;
 	int			i;
-	int			f_p;
-	int			f_m;
-	int			f_sp;
-	int			f_h;
+	int			plus;
+	int			minus;
+	int			space;
+	int			hash;
+	int			zero;
 	int			f_none;
-	int			f_zero;
 	int			l;
 	int			p;
 	int			m_h;
@@ -39,7 +35,7 @@ typedef struct		s_arg
 	int			m_ll;
 	int			m_z;
 	int			m_j;
-}					t_arg;
+}					t_env;
 
 /*
 **		tools
