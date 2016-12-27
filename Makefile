@@ -6,24 +6,15 @@
 #    By: vtenigin <vtenigin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/10 19:17:22 by vtenigin          #+#    #+#              #
-#    Updated: 2016/12/15 20:28:55 by vtenigin         ###   ########.fr        #
+#    Updated: 2016/12/26 18:10:17 by vtenigin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 PATH_SRC = ./libft/
-PATH_OBJ = ./
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-
-# ft_iswhitespace
-# ft_strrev
-# ft_itoa_base
-# ft_atol
-# ft_strtoupper
-# ft_strtolower
-# ft_strrepchr
 
 SRC = 	$(PATH_SRC)ft_strlen.c \
 		$(PATH_SRC)ft_strdup.c \

@@ -6,7 +6,7 @@
 /*   By: vtenigin <vtenigin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 17:54:35 by vtenigin          #+#    #+#             */
-/*   Updated: 2016/12/22 19:59:28 by vtenigin         ###   ########.fr       */
+/*   Updated: 2016/12/26 18:51:22 by vtenigin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,12 @@ void	dconv(char type, t_env *env)
 		d = (intmax_t)d;
 	else if (env->l || type == 'D')
 		d = (long)d;
-	else if (env->hh && type == 'D')
-		d = (unsigned short)d;
-	else if (env->hh)
-		d = (signed char)d;
-	else if (env->h && type == 'D')
-		d = (unsigned short)d;
 	else if (env->z)
 		d = (size_t)d;
 	else if (env->h)
 		d = (short)d;
+	else if (env->hh)
+		d = (signed char)d;
 	else if (!env->ll)
 		d = (int)d;
 	if (env->zero && !env->minus && env->prec == -1)
@@ -63,7 +59,8 @@ char	*dconvstd(long long d, t_env *env)
 	if (d < 0)
 		str = sjoinfree(ft_strdup("-"), str);
 	while (env->ret++ < env->width)
-		str = (env->minus) ? sjoinfree(str, ft_strdup(" ")) : sjoinfree(ft_strdup(" "), str);
+		str = (env->minus) ? sjoinfree(str, ft_strdup(" "))
+		: sjoinfree(ft_strdup(" "), str);
 	return (str);
 }
 
@@ -87,87 +84,3 @@ char	*dconvzero(long long d, t_env *env)
 		str = sjoinfree(ft_strdup("-"), str);
 	return (str);
 }
-
- // Modifier          d, i           o, u, x, X            n
- // hh                signed char    unsigned char         signed char *
- // h                 short          unsigned short        short *
- // l (ell)           long           unsigned long         long *
- // ll (ell ell)      long long      unsigned long long    long long *
- // j                 intmax_t       uintmax_t             intmax_t *
- // t                 ptrdiff_t      (see note)            ptrdiff_t *
- // z                 (see note)     size_t                (see note)
- // q (deprecated)    quad_t         u_quad_t              quad_t *
-
-
-// void	type_d(char type, t_arg *a)
-// {
-// 	long long	d;
-// 	char		*s;
-
-// 	d = va_arg(a->ap, long long);
-// 	if (a->m_l || type == 'D')
-// 		d = (long)d;
-// 	else if (a->m_h)
-// 		d = (short int)d;
-// 	else if (a->m_hh)
-// 		d = (signed char)d;
-// 	else if (a->m_j)
-// 		d = (intmax_t)d;
-// 	else if (a->m_z)
-// 		d = (ssize_t)d;
-// 	else if (!a->m_ll)
-// 		d = (int)d;
-// 	s = a->f_zero && !a->f_m ? type_d_zero(d, a) : type_d_std(d, a);
-// 	a->ret = ft_strlen(s);
-// 	ft_putstr(s);
-// 	ft_strdel(&s);
-// }
-
-// char	*type_d_std(long long d, t_arg *a)
-// {
-// 	char	*s;
-// 	int		i;
-
-// 	s = a->p == 0 && d == 0 ? ft_strnew(0) : ft_ltoa_base(d, 10);
-// 	i = ft_strlen(s);
-// 	a->ret = d < 0 || a->f_p || a->f_sp ? i + 1 : i;
-// 	while (i++ < a->p)
-// 	{
-// 		s = ft_cjoin(ft_strdup("0"), s);
-// 		a->ret++;
-// 	}
-// 	s = a->f_p && d >= 0 ? ft_cjoin(ft_strdup("+"), s) : s;
-// 	s = a->f_sp && d >= 0 && !a->f_p ? ft_cjoin(ft_strdup(" "), s) : s;
-// 	s = d < 0 ? ft_cjoin(ft_strdup("-"), s) : s;
-// 	while (a->ret < a->l)
-// 	{
-// 		s = a->f_m ? ft_cjoin(s, ft_strdup(" ")) : ft_cjoin(ft_strdup(" "), s);
-// 		a->ret++;
-// 	}
-// 	return (s);
-// }
-
-// char	*type_d_zero(long long d, t_arg *a)
-// {
-// 	char	*s;
-// 	int		i;
-
-// 	s = a->p == 0 && d == 0 ? ft_strnew(0) : ft_ltoa_base(d, 10);
-// 	i = ft_strlen(s);
-// 	a->ret = d < 0 || a->f_p || a->f_sp ? i + 1 : i;
-// 	if (a->p != -1)
-// 		while (i++ < a->p && a->ret++ < a->l)
-// 			s = ft_cjoin(ft_strdup("0"), s);
-// 	else
-// 		while (a->ret++ < a->l)
-// 			s = ft_cjoin(ft_strdup("0"), s);
-// 	s = a->f_p && d >= 0 ? ft_cjoin(ft_strdup("+"), s) : s;
-// 	s = a->f_sp && d >= 0 && !a->f_p ? ft_cjoin(ft_strdup(" "), s) : s;
-// 	s = d < 0 ? ft_cjoin(ft_strdup("-"), s) : s;
-// 	while (a->ret < a->l)
-// 	{
-// 		s = a->f_m ? ft_cjoin(s, ft_strdup(" ")) : ft_cjoin(ft_strdup(" "), s);
-// 		a->ret++;
-// 	}
-// 	return (s);
-// }

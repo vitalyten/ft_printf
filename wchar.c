@@ -6,11 +6,51 @@
 /*   By: vtenigin <vtenigin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 17:59:11 by vtenigin          #+#    #+#             */
-/*   Updated: 2016/12/12 16:09:24 by vtenigin         ###   ########.fr       */
+/*   Updated: 2016/12/26 18:12:33 by vtenigin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+char			**getunicode(char *bin)
+{
+	char	**ret;
+	char	*uc;
+	int		len;
+
+	len = ft_strlen(bin);
+	if (len < 8)
+		uc = fillutf(ft_strdup("0......."), bin);
+	else if (len < 12)
+		uc = fillutf(ft_strdup("110..... 10......"), bin);
+	else if (len < 17)
+		uc = fillutf(ft_strdup("1110.... 10...... 10......"), bin);
+	else
+		uc = fillutf(ft_strdup("11110... 10...... 10...... 10......"), bin);
+	ret = ft_strsplit(uc, ' ');
+	ft_strdel(&uc);
+	ft_strdel(&bin);
+	return (ret);
+}
+
+char			*fillutf(char *utf, char *bin)
+{
+	int		bi;
+	int		ui;
+
+	bi = ft_strlen(bin) - 1;
+	ui = ft_strlen(utf) - 1;
+	while (ui)
+	{
+		while (utf[ui] != '.' && ui)
+			ui--;
+		if (bi >= 0)
+			utf[ui--] = bin[bi--];
+		if (bi < 0 && utf[ui] == '.')
+			utf[ui--] = '0';
+	}
+	return (utf);
+}
 
 void			printuc(char **uc)
 {
@@ -24,103 +64,32 @@ void			printuc(char **uc)
 		write(1, &c, 1);
 		i++;
 	}
-	free(uc);
 }
 
-unsigned char	atocbin(char *str)
+char			*ucstostr(wchar_t *ucs)
 {
-	int				len;
-	unsigned char	uc;
-
-	uc = 0;
-	len = ft_strlen(str);
-	while (--len >= 0)
-	{
-		uc *= 2;
-		uc += str[len] - '0';
-	}
-	return (uc);
-}
-
-unsigned char	*stock_wchar(char **to_print)
-{
-	unsigned char	*s;
-	unsigned char	c;
+	char			*str;
+	char			*ret;
 	int				i;
+	int				j;
+	char			**uc;
 
-	i = -1;
-	while (to_print[++i])
-		;
-	s = (unsigned char *)malloc(i);
+	ret = ft_strnew(0);
 	i = 0;
-	while (to_print[i])
+	while (ucs[i])
 	{
-		c = atocbin(to_print[i]);
-		s[i] = c;
-		ft_strdel(&to_print[i]);
+		str = ft_ulltoa_base(ucs[i], 2);
+		uc = getunicode(str);
+		j = 0;
+		while (uc[j])
+			j++;
+		str = ft_strnew(j);
+		j = -1;
+		while (uc[++j])
+			str[j] = (char)atocbin(uc[j]);
+		ret = sjoinfree(ret, str);
+		free2d(uc);
 		i++;
 	}
-	s[i] = '\0';
-	if (to_print)
-		free(to_print);
-	return (s);
+	return (ret);
 }
-
-// unsigned char	bin_a_to_u(char *s)
-// {
-// 	int				i;
-// 	unsigned char	bin;
-// 	unsigned char	ret;
-
-// 	ret = 0;
-// 	bin = 1;
-// 	i = ft_strlen(s);
-// 	while (--i >= 0)
-// 	{
-// 		ret += (bin * (s[i] - '0'));
-// 		bin *= 2;
-// 	}
-// 	return (ret);
-// }
-
-// unsigned char	*stock_wchar(char **to_print)
-// {
-// 	unsigned char	*s;
-// 	unsigned char	c;
-// 	int				i;
-
-// 	i = -1;
-// 	while (to_print[++i])
-// 		;
-// 	s = (unsigned char *)malloc(i);
-// 	i = 0;
-// 	while (to_print[i])
-// 	{
-// 		c = bin_a_to_u(to_print[i]);
-// 		s[i] = c;
-// 		ft_strdel(&to_print[i]);
-// 		i++;
-// 	}
-// 	s[i] = '\0';
-// 	if (to_print)
-// 		free(to_print);
-// 	return (s);
-// }
-
-// void			print_wchar(char **to_print)
-// {
-// 	unsigned char	c;
-// 	int				i;
-
-// 	i = 0;
-// 	while (to_print[i])
-// 	{
-// 		c = bin_a_to_u(to_print[i]);
-// 		write(1, &c, 1);
-// 		ft_strdel(&to_print[i]);
-// 		i++;
-// 	}
-// 	if (to_print)
-// 		free(to_print);
-// }
-
