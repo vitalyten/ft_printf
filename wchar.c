@@ -6,7 +6,7 @@
 /*   By: vtenigin <vtenigin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 17:59:11 by vtenigin          #+#    #+#             */
-/*   Updated: 2016/12/26 20:08:36 by vtenigin         ###   ########.fr       */
+/*   Updated: 2016/12/26 20:32:37 by vtenigin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ char			*fillutf(char *utf, char *bin)
 
 	bi = ft_strlen(bin) - 1;
 	ui = ft_strlen(utf) - 1;
-	while (ui)
+	while (ui >= 0)
 	{
-		while (utf[ui] != '.' && ui)
+		while (utf[ui] != '.' && ui >= 0)
 			ui--;
 		if (bi >= 0)
 			utf[ui--] = bin[bi--];
