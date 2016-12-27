@@ -6,7 +6,7 @@
 /*   By: vtenigin <vtenigin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 17:59:11 by vtenigin          #+#    #+#             */
-/*   Updated: 2016/12/26 18:12:33 by vtenigin         ###   ########.fr       */
+/*   Updated: 2016/12/26 20:08:36 by vtenigin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ char			**getunicode(char *bin)
 	int		len;
 
 	len = ft_strlen(bin);
-	if (len < 8)
-		uc = fillutf(ft_strdup("0......."), bin);
-	else if (len < 12)
-		uc = fillutf(ft_strdup("110..... 10......"), bin);
-	else if (len < 17)
-		uc = fillutf(ft_strdup("1110.... 10...... 10......"), bin);
+	// if (len < 8)
+	// 	uc = fillutf(ft_strdup("0......."), bin);
+	// else if (len < 12)
+	// 	uc = fillutf(ft_strdup("110..... 10......"), bin);
+	if (len < 17)
+		uc = fillutf(ft_strdup("........ ........"), bin);
 	else
 		uc = fillutf(ft_strdup("11110... 10...... 10...... 10......"), bin);
 	ret = ft_strsplit(uc, ' ');
@@ -32,6 +32,27 @@ char			**getunicode(char *bin)
 	ft_strdel(&bin);
 	return (ret);
 }
+
+// char			**getunicode(char *bin)
+// {
+// 	char	**ret;
+// 	char	*uc;
+// 	int		len;
+
+// 	len = ft_strlen(bin);
+// 	if (len < 8)
+// 		uc = fillutf(ft_strdup("0......."), bin);
+// 	else if (len < 12)
+// 		uc = fillutf(ft_strdup("110..... 10......"), bin);
+// 	else if (len < 17)
+// 		uc = fillutf(ft_strdup("1110.... 10...... 10......"), bin);
+// 	else
+// 		uc = fillutf(ft_strdup("11110... 10...... 10...... 10......"), bin);
+// 	ret = ft_strsplit(uc, ' ');
+// 	ft_strdel(&uc);
+// 	ft_strdel(&bin);
+// 	return (ret);
+// }
 
 char			*fillutf(char *utf, char *bin)
 {
