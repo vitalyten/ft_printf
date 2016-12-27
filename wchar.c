@@ -6,11 +6,34 @@
 /*   By: vtenigin <vtenigin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/09 17:59:11 by vtenigin          #+#    #+#             */
-/*   Updated: 2016/12/26 20:55:23 by vtenigin         ###   ########.fr       */
+/*   Updated: 2016/12/26 21:16:52 by vtenigin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+char			**getunicode(char *bin)
+{
+	char	**ret;
+	char	*uc;
+	int		len;
+
+	len = ft_strlen(bin);
+	// if (len < 8)
+	// 	uc = fillutf(ft_strdup("0......."), bin);
+	// else if (len < 12)
+	// 	uc = fillutf(ft_strdup("110..... 10......"), bin);
+	if (len < 12)
+		uc = fillutf(ft_strdup("........ ........"), bin);
+	else if (len < 17)
+		uc = fillutf(ft_strdup("1110.... 10...... 10......"), bin);
+	else
+		uc = fillutf(ft_strdup("11110... 10...... 10...... 10......"), bin);
+	ret = ft_strsplit(uc, ' ');
+	ft_strdel(&uc);
+	ft_strdel(&bin);
+	return (ret);
+}
 
 // char			**getunicode(char *bin)
 // {
@@ -23,8 +46,8 @@
 // 		uc = fillutf(ft_strdup("0......."), bin);
 // 	else if (len < 12)
 // 		uc = fillutf(ft_strdup("110..... 10......"), bin);
-// 	if (len < 17)
-// 		uc = fillutf(ft_strdup("........ ........"), bin);
+// 	else if (len < 17)
+// 		uc = fillutf(ft_strdup("1110.... 10...... 10......"), bin);
 // 	else
 // 		uc = fillutf(ft_strdup("11110... 10...... 10...... 10......"), bin);
 // 	ret = ft_strsplit(uc, ' ');
@@ -54,27 +77,6 @@
 // 	return (ret);
 // }
 
-char			**getunicode(char *bin)
-{
-	char	**ret;
-	char	*uc;
-	int		len;
-
-	len = ft_strlen(bin);
-	if (len < 8)
-		uc = fillutf(ft_strdup("0......."), bin);
-	else if (len < 12)
-		uc = fillutf(ft_strdup("110..... 10......"), bin);
-	else if (len < 17)
-		uc = fillutf(ft_strdup("1110.... 10...... 10......"), bin);
-	else
-		uc = fillutf(ft_strdup("11110... 10...... 10...... 10......"), bin);
-	ret = ft_strsplit(uc, ' ');
-	ft_strdel(&uc);
-	ft_strdel(&bin);
-	return (ret);
-}
-
 char			*fillutf(char *utf, char *bin)
 {
 	int		bi;
@@ -97,17 +99,17 @@ char			*fillutf(char *utf, char *bin)
 void			printuc(char **uc)
 {
 	int				i;
-	unsigned int	c;
-	// unsigned char	c;
+	// unsigned int	c;
+	unsigned char	c;
 
 	i = 0;
-	c = 0;
+	// c = 0;
 	while (uc[i])
 	{
-		c += atocbin(uc[i]);
+		c = atocbin(uc[i]);
 		i++;
+		write(1, &c, 1);
 	}
-	write(1, &c, 1);
 }
 
 char			*ucstostr(wchar_t *ucs)
