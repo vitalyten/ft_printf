@@ -1,7 +1,7 @@
 ft_printf
 
 Recoded libc’s printf function.
-prototyped similarly to printf.
+Prototyped similarly to printf.
 Supports sSpdDioOuUxXcC
 Supports %%
 Supports flags *#0-+ and space
