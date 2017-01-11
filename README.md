@@ -14,4 +14,4 @@ Supports minimum field-width
 
 Supports precision
 
-Supports flags hh, h, l, ll, j, et z.
+Supports flags hh, h, l, ll, j, z.
