@@ -1,4 +1,4 @@
-ft_printf
+# ft_printf
 
 Recoded libc’s printf function.
 
